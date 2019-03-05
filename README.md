@@ -76,4 +76,11 @@ Turn on the credential helper so that Git will save your password in memory for 
     ```$ git config --global credential.helper 'cache --timeout=3600'```
     # Set the cache to timeout after 1 hour (setting is in seconds)
 
+Work with Magit
+===
 
+Type ```:Magit``` in Vim to get a sidebar with Git status (press ```?``` for commands).
+
+Inside the sidebar, ```q``` will quit (close) sidebar.
+
+Test if ``` CC ``` then in commit mode ``` :w ``` will commit the change with the message written.
