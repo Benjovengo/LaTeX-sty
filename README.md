@@ -83,4 +83,6 @@ Type ```:Magit``` in Vim to get a sidebar with Git status (press ```?``` for com
 
 Inside the sidebar, ```q``` will quit (close) sidebar.
 
-Test if ``` CC ``` then in commit mode ``` :w ``` will commit the change with the message written.
+Stage: type ```S``` with the cursor on top of the filename to stage.
+
+Then type ``` CC ``` and then in commit mode ``` :w ``` will commit the change with the message written. The ```CC``` command opens an area to write the comment on the commit.
