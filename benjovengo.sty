@@ -3,30 +3,125 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{benjovengo}[2019/03/05 Example package] % YYYY/MM/DD
 
-%%Requeiried packages and preliminary definitions, needed by the options
+%%REQUEIRIED PACKAGE
+%português (pt-br)
+\RequirePackage[brazil]{babel}
+\RequirePackage[utf8]{inputenc}
+
+%other packages
 \RequirePackage{imakeidx}
 \RequirePackage{xstring}
 \RequirePackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,decorations}
+\RequirePackage{environ}
+\RequirePackage{tikz}
+\RequirePackage{fontawesome}
+
+
+%%REQUIRED PACKAGES SETUP
+  %listings
+  \lstset{breaklines=true, postbreak={\mbox{$\hookrightarrow\space$}}, language=Mathematica}
+
+  %tikz
+  \usetikzlibrary{shapes,decorations, calc}
+
+
+%%COLOR DEFINITIONS
 \definecolor{greycolour}{HTML}{525252}
 \definecolor{sharelatexcolour}{HTML}{882B21}
 \definecolor{mybluecolour}{HTML}{394773}
 
+%alert boxes (warning, info and alert)
+	\definecolor{backgray}{rgb}{0.900, 0.900, 0.900}
+	\definecolor{warnred}{rgb}{1.000, 0.100, 0.100}
+  \definecolor{infoyellow}{rgb}{1.000, 0.647, 0.000}
+  \definecolor{infoblue}{rgb}{0.078, 0.494, 0.984}
+	\definecolor{textgray}{rgb}{0.100, 0.100, 0.100}
+
+%%COMMAND DEFINITIONS
 \newcommand{\wordcolour}{greycolour}
 
+
+%%ENVIRONMENTS
+\tikzstyle{boxround} = [draw=none, fill=backgray, rectangle, inner sep=1.5\baselineskip, inner ysep=1.25\baselineskip]
+\tikzstyle{head} =[draw=none, fill=none, rectangle]
+
+  %warning block
+	\NewEnviron{warning}{%
+		\bigskip
+		\begin{center}
+		\noindent\begin{tikzpicture}
+			\node [boxround] (box){%
+				\begin{minipage}{.90\textwidth}
+					\vspace*{3.0\baselineskip}
+					\BODY % what comes inside the environment
+				\end{minipage}};
+			\draw[fill=white, draw=none] ($(box.north west) + (2.6\baselineskip,-1.95\baselineskip)$) circle [radius=0.65\baselineskip];
+			\node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{warnred}{\Huge\faTimesCircle}}};
+			\node[head, right=3.75\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{textgray}{\textsf{\Large Informações Críticas!}}}};
+      \draw[line width=5pt, warnred] (box.south west) |- (box.north west);
+		\end{tikzpicture}
+		\end{center}
+		\bigskip
+	}
+
+  %alert block
+  \NewEnviron{alert}{%
+  \bigskip
+  \begin{center}
+  \noindent\begin{tikzpicture}
+    \node [boxround] (box){%
+      \begin{minipage}{.90\textwidth}
+        \vspace*{3.0\baselineskip}
+        \BODY % what comes inside the environment
+      \end{minipage}};
+    \draw[fill=white, draw=none] ($(box.north west) + (2.6\baselineskip,-1.95\baselineskip)$) circle [radius=0.65\baselineskip];
+    \node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{infoyellow}{\Huge\faExclamationCircle}}};
+    \node[head, right=3.75\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{textgray}{\textsf{\Large Observações Importantes!}}}};
+    \draw[line width=5pt, infoyellow] (box.south west) |- (box.north west);
+  \end{tikzpicture}
+  \end{center}
+  \bigskip
+  }
+
+  %info block
+  \NewEnviron{info}{%
+  \bigskip
+  \begin{center}
+  \noindent\begin{tikzpicture}
+    \node [boxround] (box){%
+      \begin{minipage}{.90\textwidth}
+        \vspace*{3.0\baselineskip}
+        \BODY % what comes inside the environment
+      \end{minipage}};
+    \draw[fill=white, draw=none] ($(box.north west) + (2.6\baselineskip,-1.95\baselineskip)$) circle [radius=0.65\baselineskip];
+    \node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{infoblue}{\Huge\faInfoCircle}}};
+    \node[head, right=3.75\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{textgray}{\textsf{\Large Informações Adicionais}}}};
+    \draw[line width=5pt, infoblue] (box.south west) |- (box.north west);
+  \end{tikzpicture}
+  \end{center}
+  \bigskip
+  }
+
+%%OPTIONS FOR THE PACKAGE (\usepackage[options]{benjovengo})
+%%used on the .tex file
 %%This parts handles the options passed to the package.
 \DeclareOption{red}{\renewcommand{\wordcolour}{sharelatexcolour}}
 \DeclareOption{blue}{\renewcommand{\wordcolour}{mybluecolour}}
 \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
-%%Body of the package, most of the declarations appear here.
+%%BODY OF THE PACKAGE
+%%most of the declarations appear here.
 
-%%Numbered environment
+%numbered environment
 \newcounter{example}[section]
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
 \noindent \textbf{My~environment~\theexample. #1} \rmfamily}{\medskip}
 
-%%Important words are added to the index and printed in different colour
+%important words are added to the index and printed in different colour
 \newcommand{\important}[1]
 {\IfSubStr{#1}{!}
     {\textcolor{\wordcolour}{\textbf{\StrBefore{#1}{!}~\StrBehind{#1}{!}}}\index{#1}}
