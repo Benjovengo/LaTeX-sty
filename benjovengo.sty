@@ -1,8 +1,8 @@
 %%TODO
 %%----
-% Capa
-% Índice
-% Título do 'Índice Remissivo' em MyDarkYellow
+% Índice: formatação
+% Título do 'Índice Remissivo', 'Sumário' e 'Lista de Figuras' em MyDarkYellow
+% Fancyhdr para colocar o nome do autor
 %%----
 
 %%Identification
@@ -28,6 +28,7 @@
 \RequirePackage{ifxetex}
 \RequirePackage{titlesec}
 \RequirePackage{indentfirst}
+\RequirePackage{datetime}                                                     
 % hyperref
 \RequirePackage{nameref}
 \RequirePackage{hyphenat}
@@ -51,6 +52,19 @@
   %tikz
   \usetikzlibrary{shapes,decorations, calc}
 
+  %hyperref
+  \hypersetup{
+    colorlinks = false,
+    linkbordercolor = {white},
+  }
+
+  %datetime
+  \newcommand{\monthyear}{%                                                 
+    \ifcase\month\or Primeiro\or Primeiro\or Primeiro\or Primeiro\or Primeiro\
+      Segundo\or Segundo\or Segundo\or Segundo\or Segundo\or                  
+      Segundo\fi                                                              
+  }                                                                         
+  \date{\monthyear\ Semestre\ de\ \the\year}
 
 %%COLOR DEFINITIONS
 \definecolor{greycolour}{HTML}{525252}
@@ -175,35 +189,36 @@
 
 
 %%SECTIONS HEADINGS FORMATING -------------------------------------------------
+% see ~/Dropbox/TeXFiles/Template-Book
 \setcounter{secnumdepth}{3}
 
 \addto\captionsbrazil{\renewcommand{\chaptername}{Aula}} % change chaptername from Chapter to Aula
 %\renewcommand{\chaptername}{Lecture}
 
 \titleformat{\chapter}[display]
-{\normalfont\sffamily}
-{\Large\color{MyDarkYellow}\chaptername\hspace*{0.2cm}\thechapter}
-{-1ex}
-{\vspace{0ex}\Huge\selectfont\rmfamily\color{textgray}}
-[\vspace{0ex}]
+  {\normalfont\sffamily}
+  {\Large\color{MyDarkYellow}\chaptername\hspace*{0.2cm}\thechapter}
+  {-1ex}
+  {\vspace{0ex}\Huge\selectfont\rmfamily\color{textgray}}
+  [\vspace{0ex}]
 
 \titleformat{\section}[display]
-{\normalfont\sffamily}
-{}
-{-1ex}
-{\Large\bfseries\color{MyDarkYellow}\thesection\hspace*{0.2cm}}
-[]
+  {\normalfont\sffamily}
+  {}
+  {-1ex}
+  {\Large\color{MyDarkYellow}\thesection\hspace*{0.2cm}} %\bfseries
+  []
 
 \titleformat{\subsection}[display]
-{\normalfont\sffamily}
-{}
-{-1ex}
-{\large\bfseries\color{MyDarkYellow}\thesubsection\hspace*{0.2cm}}
-[]
+  {\normalfont\sffamily}
+  {}
+  {-1ex}
+  {\large\color{MyDarkYellow}\thesubsection\hspace*{0.2cm}} %\bfseries
+  []
 
 \titleformat{\subsubsection}[display]
-{\normalfont\sffamily}
-{}
-{-1ex}
-{\bfseries\color{MyDarkYellow}\thesubsubsection\hspace*{0.2cm}}
-[]
+  {\normalfont\sffamily}
+  {}
+  {-1ex}
+  {\color{MyDarkYellow}\thesubsubsection\hspace*{0.2cm}} %\bfseries
+  []
