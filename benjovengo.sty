@@ -1,3 +1,10 @@
+%%TODO
+%%----
+% Capa
+% Índice
+% Título do 'Índice Remissivo' em MyDarkYellow
+%%----
+
 %%Identification
 %%The package identifies itself and the LaTeX version needed
 \NeedsTeXFormat{LaTeX2e}
@@ -18,6 +25,23 @@
 \RequirePackage{environ}
 \RequirePackage{tikz}
 \RequirePackage{fontawesome}
+\RequirePackage{ifxetex}
+\RequirePackage{titlesec}
+\RequirePackage{indentfirst}
+% hyperref
+\RequirePackage{nameref}
+\RequirePackage{hyphenat}
+\RequirePackage{hyperref}
+\RequirePackage{url}
+% geometry
+\RequirePackage{geometry}
+\geometry{
+  a4paper,
+  left={25mm},
+  right={25mm},
+  top={1.5in},
+  bottom={1.5in},
+}
 
 
 %%REQUIRED PACKAGES SETUP
@@ -35,10 +59,13 @@
 
 %alert boxes (warning, info and alert)
 	\definecolor{backgray}{rgb}{0.900, 0.900, 0.900}
-	\definecolor{warnred}{rgb}{1.000, 0.100, 0.100}
-  \definecolor{infoyellow}{rgb}{1.000, 0.647, 0.000}
+	\definecolor{criticalred}{rgb}{1.000, 0.100, 0.100}
+  \definecolor{warnyellow}{rgb}{1.000, 0.647, 0.000}
   \definecolor{infoblue}{rgb}{0.078, 0.494, 0.984}
 	\definecolor{textgray}{rgb}{0.100, 0.100, 0.100}
+
+  \definecolor{MyDarkYellow}{HTML}{f99806} %ff9900
+  \definecolor{MyDarkGray}{HTML}{b0b0b0}
 
 %%COMMAND DEFINITIONS
 \newcommand{\wordcolour}{greycolour}
@@ -48,8 +75,8 @@
 \tikzstyle{boxround} = [draw=none, fill=backgray, rectangle, inner sep=1.5\baselineskip, inner ysep=1.25\baselineskip]
 \tikzstyle{head} =[draw=none, fill=none, rectangle]
 
-  %warning block
-	\NewEnviron{warning}{%
+  %critical block
+	\NewEnviron{critical}{%
 		\bigskip
 		\begin{center}
 		\noindent\begin{tikzpicture}
@@ -59,16 +86,16 @@
 					\BODY % what comes inside the environment
 				\end{minipage}};
 			\draw[fill=white, draw=none] ($(box.north west) + (2.6\baselineskip,-1.95\baselineskip)$) circle [radius=0.65\baselineskip];
-			\node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{warnred}{\Huge\faTimesCircle}}};
+			\node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{criticalred}{\Huge\faTimesCircle}}};
 			\node[head, right=3.75\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{textgray}{\textsf{\Large Informações Críticas!}}}};
-      \draw[line width=5pt, warnred] (box.south west) |- (box.north west);
+      \draw[line width=5pt, criticalred] (box.south west) |- (box.north west);
 		\end{tikzpicture}
 		\end{center}
 		\bigskip
 	}
 
-  %alert block
-  \NewEnviron{alert}{%
+  %warning block
+  \NewEnviron{warning}{%
   \bigskip
   \begin{center}
   \noindent\begin{tikzpicture}
@@ -78,9 +105,9 @@
         \BODY % what comes inside the environment
       \end{minipage}};
     \draw[fill=white, draw=none] ($(box.north west) + (2.6\baselineskip,-1.95\baselineskip)$) circle [radius=0.65\baselineskip];
-    \node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{infoyellow}{\Huge\faExclamationCircle}}};
+    \node[head, right=1.5\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{warnyellow}{\Huge\faExclamationCircle}}};
     \node[head, right=3.75\baselineskip, yshift=-2.0\baselineskip] at (box.north west) {\textbf{\textcolor{textgray}{\textsf{\Large Observações Importantes!}}}};
-    \draw[line width=5pt, infoyellow] (box.south west) |- (box.north west);
+    \draw[line width=5pt, warnyellow] (box.south west) |- (box.north west);
   \end{tikzpicture}
   \end{center}
   \bigskip
@@ -113,7 +140,25 @@
 \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
-%%BODY OF THE PACKAGE
+%%FONTS
+%Test if a document is being compiled by XeLaTeX and load more fonts
+\ifxetex
+  \usepackage{fontspec}
+  \setsansfont[
+  	ExternalLocation,
+  	Extension=.ttf,
+  	UprightFont=*-Thin,
+  	ItalicFont=*-Italic,
+  	BoldFont=*-Bold,
+  	BoldItalicFont=*-BoldItalic,
+  	Ligatures={TeX,Common}
+	]{Roboto}
+\else
+  %\usepackage{tgtermes}
+\fi
+
+
+%%BODY OF THE PACKAGE ---------------------------------------------------------
 %%most of the declarations appear here.
 
 %numbered environment
@@ -127,3 +172,38 @@
     {\textcolor{\wordcolour}{\textbf{\StrBefore{#1}{!}~\StrBehind{#1}{!}}}\index{#1}}
     {\textcolor{\wordcolour}{\textbf{#1}}\index{#1}\kern-1pt}
 }
+
+
+%%SECTIONS HEADINGS FORMATING -------------------------------------------------
+\setcounter{secnumdepth}{3}
+
+\addto\captionsbrazil{\renewcommand{\chaptername}{Aula}} % change chaptername from Chapter to Aula
+%\renewcommand{\chaptername}{Lecture}
+
+\titleformat{\chapter}[display]
+{\normalfont\sffamily}
+{\Large\color{MyDarkYellow}\chaptername\hspace*{0.2cm}\thechapter}
+{-1ex}
+{\vspace{0ex}\Huge\selectfont\rmfamily\color{textgray}}
+[\vspace{0ex}]
+
+\titleformat{\section}[display]
+{\normalfont\sffamily}
+{}
+{-1ex}
+{\Large\bfseries\color{MyDarkYellow}\thesection\hspace*{0.2cm}}
+[]
+
+\titleformat{\subsection}[display]
+{\normalfont\sffamily}
+{}
+{-1ex}
+{\large\bfseries\color{MyDarkYellow}\thesubsection\hspace*{0.2cm}}
+[]
+
+\titleformat{\subsubsection}[display]
+{\normalfont\sffamily}
+{}
+{-1ex}
+{\bfseries\color{MyDarkYellow}\thesubsubsection\hspace*{0.2cm}}
+[]
