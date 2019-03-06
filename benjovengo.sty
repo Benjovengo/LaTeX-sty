@@ -1,7 +1,6 @@
 %%TODO
 %%----
 % Índice: formatação
-% Título do 'Índice Remissivo', 'Sumário' e 'Lista de Figuras' em MyDarkYellow
 % Fancyhdr para colocar o nome do autor
 %%----
 
@@ -28,7 +27,8 @@
 \RequirePackage{ifxetex}
 \RequirePackage{titlesec}
 \RequirePackage{indentfirst}
-\RequirePackage{datetime}                                                     
+\RequirePackage{datetime}
+\RequirePackage{titlesec}
 % hyperref
 \RequirePackage{nameref}
 \RequirePackage{hyphenat}
@@ -180,6 +180,13 @@
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
 \noindent \textbf{My~environment~\theexample. #1} \rmfamily}{\medskip}
 
+%inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+%general purpose macros for typesetting the documentation
+\newcommand{\TODO}{\textcolor{red}{\bfseries TODO!}\xspace}
+
+
 %important words are added to the index and printed in different colour
 \newcommand{\important}[1]
 {\IfSubStr{#1}{!}
@@ -201,6 +208,14 @@
   {-1ex}
   {\vspace{0ex}\Huge\selectfont\rmfamily\color{textgray}}
   [\vspace{0ex}]
+
+\titleformat{name=\chapter,numberless}[display]
+  {\Large\color{MyDarkYellow}\sffamily}
+  {\titlerule}
+  {-7ex}
+  {\vspace{0ex}\Huge\selectfont\sffamily\color{textgray}}
+  [\vspace{0ex}]
+
 
 \titleformat{\section}[display]
   {\normalfont\sffamily}
