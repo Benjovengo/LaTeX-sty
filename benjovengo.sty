@@ -1,6 +1,6 @@
 %%TODO
 %%----
-% Fancyhdr: autor em bold no rodapé - passar para regular (sem bold).
+% 
 %%----
 
 %%Identification
@@ -290,6 +290,20 @@
   \let\Author\@author%
 }{}
 
+%%UNDO BOLD STYLE ON AUTHOR
+\newcommand{\nullifystyle}[1]{%
+  \begingroup
+  \edef\sv@f@shape{\f@shape}%
+  \edef\sv@f@series{\f@series}%
+  \let\sv@selectfont\selectfont
+  \def\selectfont{%
+    \fontshape{\sv@f@shape}%
+    \fontseries{\sv@f@series}%
+    \sv@selectfont
+  }%
+  #1%
+  \endgroup
+}
 
 %%FANCY HEADERS
 % see ~/Documents/TeXfiles/Temp/BookMargin/book.tex
@@ -305,9 +319,10 @@
 	\fancyhead[LE,RO]{}
 	\fancyhead[RE,LO]{\sffamily\color{MyDarkYellow}\leftmark}
 	\fancyfoot[RE,LO]{\sffamily\mdseries\color{MyDarkGray}\thepage}
-  \fancyfoot[LE,RO]{\sffamily\mdseries\color{MyDarkGray}\Author\textcopyright}
+  \fancyfoot[LE,RO]{\sffamily\mdseries\color{MyDarkGray}\nullifystyle{\Author}\textcopyright}
 }
-	\renewcommand{\headrulewidth}{0pt}
-	\renewcommand{\footrulewidth}{0pt}
 
-  \pagestyle{myfancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pagestyle{myfancy}
