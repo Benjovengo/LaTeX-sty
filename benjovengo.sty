@@ -1,6 +1,5 @@
 %%TODO
 %%----
-% Índice: formatação
 % Fancyhdr para colocar o nome do autor
 %%----
 
@@ -29,6 +28,9 @@
 \RequirePackage{indentfirst}
 \RequirePackage{datetime}
 \RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{etoolbox}
+%\RequirePackage{tocloft} %undo the titletoc settings
 % hyperref
 \RequirePackage{nameref}
 \RequirePackage{hyphenat}
@@ -237,3 +239,38 @@
   {-1ex}
   {\color{MyDarkYellow}\thesubsubsection\hspace*{0.2cm}} %\bfseries
   []
+
+%% TABLE OF CONTENTS FORMATING
+% see ~/Documents/TeXfiles/TutorialVrs/mybook.sty
+
+  % Redefinition of ToC command to get centered heading
+\makeatletter
+
+\titlecontents{chapter}
+[3.8em] % ie, 1.5em (chapter) + 2.3em
+{}
+{\LARGE\color{MyDarkYellow}\contentslabel{2.3em}\sffamily}
+{\hspace*{-2.3em}(vimtex-view)}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{section}
+[3.8em] % ie, 1.5em (chapter) + 2.3em
+{}
+{\large\contentslabel{2.3em}\color{textgray}\sffamily}
+{\hspace*{-2.3em}}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{subsection}
+[3.8em] % ie, 1.5em (chapter) + 2.
+{}
+{\contentslabel{2.3em}\color{textgray}\sffamily}
+{\hspace*{-2.3em}}
+{\titlerule*[1pc]{.}\contentspage}
+
+
+\titlecontents{subsubsection}
+[3.8em] % ie, 1.5em (chapter) + 2.
+{}
+{\contentslabel{2.3em}\color{textgray}\sffamily}
+{\hspace*{-2.3em}}
+{\titlerule*[1pc]{.}\contentspage}
