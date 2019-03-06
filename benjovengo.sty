@@ -1,6 +1,6 @@
 %%TODO
 %%----
-% Fancyhdr para colocar o nome do autor
+% Fancyhdr: autor em bold no rodapé - passar para regular (sem bold).
 %%----
 
 %%Identification
@@ -30,6 +30,8 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
 %\RequirePackage{tocloft} %undo the titletoc settings
 % hyperref
 \RequirePackage{nameref}
@@ -68,6 +70,12 @@
   }                                                                         
   \date{\monthyear\ Semestre\ de\ \the\year}
 
+  %graphicx
+  \setkeys{Gin}{width=0.9\linewidth,totalheight=\textheight,keepaspectratio}
+  \graphicspath{{graphics/}}
+
+
+
 %%COLOR DEFINITIONS
 \definecolor{greycolour}{HTML}{525252}
 \definecolor{sharelatexcolour}{HTML}{882B21}
@@ -81,7 +89,7 @@
 	\definecolor{textgray}{rgb}{0.100, 0.100, 0.100}
 
   \definecolor{MyDarkYellow}{HTML}{f99806} %ff9900
-  \definecolor{MyDarkGray}{HTML}{b0b0b0}
+  \definecolor{MyDarkGray}{HTML}{555555}
 
 %%COMMAND DEFINITIONS
 \newcommand{\wordcolour}{greycolour}
@@ -274,3 +282,32 @@
 {\contentslabel{2.3em}\color{textgray}\sffamily}
 {\hspace*{-2.3em}}
 {\titlerule*[1pc]{.}\contentspage}
+
+
+%%AUTHOR AND TITLE
+\pretocmd\maketitle{%
+  \let\Title\@title%
+  \let\Author\@author%
+}{}
+
+
+%%FANCY HEADERS
+% see ~/Documents/TeXfiles/Temp/BookMargin/book.tex
+\setlength{\headheight}{2\baselineskip}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[RE,LO]{\sffamily\mdseries\color{MyDarkGray}\thepage}
+}
+
+\fancypagestyle{myfancy}{
+	\fancyhf{}
+	\fancyhead[LE,RO]{}
+	\fancyhead[RE,LO]{\sffamily\color{MyDarkYellow}\leftmark}
+	\fancyfoot[RE,LO]{\sffamily\mdseries\color{MyDarkGray}\thepage}
+  \fancyfoot[LE,RO]{\sffamily\mdseries\color{MyDarkGray}\Author\textcopyright}
+}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+
+  \pagestyle{myfancy}
