@@ -1,6 +1,6 @@
 %%TODO
 %%----
-% 
+% Definição de Environments (Exemplos, Teoremas, Códigos em Matlab ou Python)
 %%----
 
 %%Identification
@@ -72,14 +72,15 @@
 
   %graphicx
   \setkeys{Gin}{width=0.9\linewidth,totalheight=\textheight,keepaspectratio}
-  \graphicspath{{graphics/}}
+  \graphicspath{{Figures/}}
 
 
 
 %%COLOR DEFINITIONS
-\definecolor{greycolour}{HTML}{525252}
-\definecolor{sharelatexcolour}{HTML}{882B21}
-\definecolor{mybluecolour}{HTML}{394773}
+\definecolor{greycolor}{HTML}{525252}
+\definecolor{sharelatexcolor}{HTML}{882B21}
+\definecolor{mybluecolor}{HTML}{394773}
+\definecolor{MyDarkBlue}{cmyk}{1,.60,0,.40}
 
 %alert boxes (warning, info and alert)
 	\definecolor{backgray}{rgb}{0.900, 0.900, 0.900}
@@ -92,7 +93,7 @@
   \definecolor{MyDarkGray}{HTML}{555555}
 
 %%COMMAND DEFINITIONS
-\newcommand{\wordcolour}{greycolour}
+\newcommand{\wordcolor}{greycolor}
 
 
 %%ENVIRONMENTS
@@ -159,8 +160,8 @@
 %%OPTIONS FOR THE PACKAGE (\usepackage[options]{benjovengo})
 %%used on the .tex file
 %%This parts handles the options passed to the package.
-\DeclareOption{red}{\renewcommand{\wordcolour}{sharelatexcolour}}
-\DeclareOption{blue}{\renewcommand{\wordcolour}{mybluecolour}}
+\DeclareOption{yellow}{\renewcommand{\wordcolor}{MyDarkYellow}}
+\DeclareOption{blue}{\renewcommand{\wordcolor}{MyDarkBlue}}
 \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
@@ -185,7 +186,7 @@
 %%BODY OF THE PACKAGE ---------------------------------------------------------
 %%most of the declarations appear here.
 
-%numbered environment
+%NUMBERED ENVIRONMENT
 \newcounter{example}[section]
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
 \noindent \textbf{My~environment~\theexample. #1} \rmfamily}{\medskip}
@@ -197,11 +198,11 @@
 \newcommand{\TODO}{\textcolor{red}{\bfseries TODO!}\xspace}
 
 
-%important words are added to the index and printed in different colour
+%important words are added to the index and printed in different color
 \newcommand{\important}[1]
 {\IfSubStr{#1}{!}
-    {\textcolor{\wordcolour}{\textbf{\StrBefore{#1}{!}~\StrBehind{#1}{!}}}\index{#1}}
-    {\textcolor{\wordcolour}{\textbf{#1}}\index{#1}\kern-1pt}
+    {\textcolor{\wordcolor}{\textbf{\StrBefore{#1}{!}~\StrBehind{#1}{!}}}\index{#1}}
+    {\textcolor{\wordcolor}{\textbf{#1}}\index{#1}\kern-1pt}
 }
 
 
@@ -214,13 +215,13 @@
 
 \titleformat{\chapter}[display]
   {\normalfont\sffamily}
-  {\Large\color{MyDarkYellow}\chaptername\hspace*{0.2cm}\thechapter}
+  {\Large\color{\wordcolor}\chaptername\hspace*{0.2cm}\thechapter}
   {-1ex}
   {\vspace{0ex}\Huge\selectfont\rmfamily\color{textgray}}
   [\vspace{0ex}]
 
 \titleformat{name=\chapter,numberless}[display]
-  {\Large\color{MyDarkYellow}\sffamily}
+  {\Large\color{\wordcolor}\sffamily}
   {\titlerule}
   {-7ex}
   {\vspace{0ex}\Huge\selectfont\sffamily\color{textgray}}
@@ -231,21 +232,21 @@
   {\normalfont\sffamily}
   {}
   {-1ex}
-  {\Large\color{MyDarkYellow}\thesection\hspace*{0.2cm}} %\bfseries
+  {\Large\color{\wordcolor}\thesection\hspace*{0.2cm}} %\bfseries
   []
 
 \titleformat{\subsection}[display]
   {\normalfont\sffamily}
   {}
   {-1ex}
-  {\large\color{MyDarkYellow}\thesubsection\hspace*{0.2cm}} %\bfseries
+  {\large\color{\wordcolor}\thesubsection\hspace*{0.2cm}} %\bfseries
   []
 
 \titleformat{\subsubsection}[display]
   {\normalfont\sffamily}
   {}
   {-1ex}
-  {\color{MyDarkYellow}\thesubsubsection\hspace*{0.2cm}} %\bfseries
+  {\color{\wordcolor}\thesubsubsection\hspace*{0.2cm}} %\bfseries
   []
 
 %% TABLE OF CONTENTS FORMATING
@@ -257,7 +258,7 @@
 \titlecontents{chapter}
 [3.8em] % ie, 1.5em (chapter) + 2.3em
 {}
-{\LARGE\color{MyDarkYellow}\contentslabel{2.3em}\sffamily}
+{\Large\color{\wordcolor}\contentslabel{2.3em}\sffamily}
 {\hspace*{-2.3em}(vimtex-view)}
 {\titlerule*[1pc]{.}\contentspage}
 
@@ -317,7 +318,7 @@
 \fancypagestyle{myfancy}{
 	\fancyhf{}
 	\fancyhead[LE,RO]{}
-	\fancyhead[RE,LO]{\sffamily\color{MyDarkYellow}\leftmark}
+	\fancyhead[RE,LO]{\sffamily\color{\wordcolor}\leftmark}
 	\fancyfoot[RE,LO]{\sffamily\mdseries\color{MyDarkGray}\thepage}
   \fancyfoot[LE,RO]{\sffamily\mdseries\color{MyDarkGray}\nullifystyle{\Author}\textcopyright}
 }
