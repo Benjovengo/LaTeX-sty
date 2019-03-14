@@ -331,3 +331,55 @@
 \renewcommand{\footrulewidth}{0pt}
 
 \pagestyle{myfancy}
+
+
+%%How do I create a command like \title in LaTeX?
+% see https://stackoverflow.com/questions/2833954/how-do-i-create-a-command-like-title-in-latex
+
+%in in the \maketitle command, use \@university to use the University name
+\def\@university{no university}
+\newcommand{\university}[1]{
+  \def\@university{#1}
+}
+
+%%TITLE PAGE DEFINITION
+% see /home/virus/Documents/TeXfiles/Typography/essay_1.tex
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+
+%% The title is \@title
+%% It was written by \@author\space on \@date
+
+\textsc{\LARGE Puc-Campinas}\\[1.5cm]
+\textsc{\Large Faculdade de Engenharia Elétrica}\\[0.5cm]
+\textsc{\large Grupo de Robótica Móvel}\\[0.5cm]
+
+\HRule \\[0.6cm]
+{ \Huge \bfseries Controle de um Veículo Autônomo}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Fábio Pereira \textsc{Benjovengo}, PhD. % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.2\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+$-$ % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[4cm]
+
+{\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+
+%\includegraphics[width=5cm,keepaspectratio]{car_logo_new}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
