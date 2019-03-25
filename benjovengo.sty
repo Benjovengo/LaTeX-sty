@@ -34,6 +34,8 @@
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
 \RequirePackage{fancyhdr}
+\RequirePackage{longtable}
+\RequirePackage{array}
 %\RequirePackage{tocloft} %undo the titletoc settings
 % hyperref
 \RequirePackage{nameref}
@@ -216,6 +218,13 @@
 \addto\captionsbrazil{\renewcommand{\chaptername}{Aula}} % change chaptername from Chapter to Aula
 %\renewcommand{\chaptername}{Lecture}
 
+
+\titleformat{\part}[display]
+   {\huge\filcenter\bfseries\sffamily}
+   {\color{\wordcolor}\partname{} \thepart}
+   {0em}
+   {\Huge\bfseries\rmfamily}
+
 \titleformat{\chapter}[display]
   {\normalfont\sffamily}
   {\Large\color{\wordcolor}\chaptername\hspace*{0.2cm}\thechapter}
@@ -255,14 +264,17 @@
 %% TABLE OF CONTENTS FORMATING
 % see ~/Documents/TeXfiles/TutorialVrs/mybook.sty
 
-  % Redefinition of ToC command to get centered heading
-\makeatletter
+  % redefinition of ToC command to get centered heading
+  %\makeatletter
+
+  % reset chapter every new \part
+  \@addtoreset{chapter}{part}
 
 \titlecontents{chapter}
 [3.8em] % ie, 1.5em (chapter) + 2.3em
 {}
 {\Large\color{\wordcolor}\contentslabel{2.3em}\sffamily}
-{\hspace*{-2.3em}(vimtex-view)}
+{\hspace*{-2.3em}}
 {\titlerule*[1pc]{.}\contentspage}
 
 \titlecontents{section}
@@ -374,7 +386,7 @@ As notas de aula não substituem a leitura dos livros e textos referenciados nas
 }{}
 
 
-%TICKS FOR TASK COMPLETIONS
+%%TICKS FOR TASK COMPLETIONS
 
 \def\done{\tikz[x=0.75em,y=0.75em,baseline=0]
 {\draw[fill=black] (0.0,0.0) rectangle (1.0,1.0);
@@ -406,6 +418,28 @@ As notas de aula não substituem a leitura dos livros e textos referenciados nas
 
 \hbadness=10000
 
+%%TODO (TASKS) ENVIRONMENT
+\newenvironment{tasks}
+  {
+    \setlength\LTleft{0pt}
+    \setlength\LTright{0pt}
+    \begin{longtable}{m{0.2in}l}
+  }
+  {
+  \end{longtable}
+  }
+
+%%DIFFERENTIATE CHAPTERS FROM LECTURES
+  % put \chapters or \classes before a block of chapters or lectures
+\newcommand{\chapters}
+{
+  \renewcommand{\chaptername}{Capítulo}
+}
+
+\newcommand{\classes}
+{
+  \renewcommand{\chaptername}{Aula}
+}
 
 
 
